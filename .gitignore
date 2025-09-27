@@ -1,0 +1,5 @@
+# Ignore the folder containing test images
+test images/
+
+# Ignore all text files
+*.txt
