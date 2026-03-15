@@ -1,2 +1,2 @@
-LIVE DEMO:https://pndeyyash-cmd.github.io/qr-code-generator/
+LIVE DEMO:https: //pndeyyash-cmd.github.io/qr-code-generator/
 git resporitory : https://github.com/pndeyyash-cmd/qr-code-generator
