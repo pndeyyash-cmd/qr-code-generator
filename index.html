@@ -3,170 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VardhanFlow | QR Sticker Generator</title>
+    <title>VardhanFlow | Sovereign QR Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
-        /* Custom styles to enhance Tailwind */
         body {
             font-family: 'Inter', sans-serif;
-            background-image: linear-gradient(rgba(26, 32, 44, 0.85), rgba(26, 32, 44, 0.85)), url('background.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-color: #050505;
+            background-image: radial-gradient(circle at 50% 50%, rgba(212, 165, 116, 0.05) 0%, transparent 80%);
         }
-        ::placeholder {
-            color: #718096;
-        }
-        /* Custom Sticker Styling */
-        #capture-area {
-            width: 320px;
-            background-color: white;
-            padding: 24px;
-            border-radius: 16px;
-            box-shadow: 0 0 25px rgba(0, 170, 255, 0.2);
-            display: none; /* Hidden until generated */
-        }
-        #capture-area.generated {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-        }
+        .copper-glow { box-shadow: 0 0 40px rgba(212, 165, 116, 0.15); }
+        .input-focus:focus { border-color: #d4a574; box-shadow: 0 0 15px rgba(212, 165, 116, 0.2); }
+        .branded-footer { border-top: 1px dashed rgba(212, 165, 116, 0.3); }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
 
-    <nav class="absolute top-0 left-0 w-full p-4">
+    <nav class="absolute top-0 left-0 w-full p-6">
         <div class="container mx-auto">
-            <p class="text-white text-lg font-semibold">Developed by Yash Vardhan</p>
+            <p class="text-[#d4a574] text-xs font-black uppercase tracking-[0.4em]">VardhanFlow // Engineering Lab</p>
         </div>
     </nav>
 
-    <div class="w-full max-w-4xl grid md:grid-cols-2 gap-8 items-start">
+    <div class="w-full max-w-6xl grid lg:grid-cols-2 gap-12 items-start mt-12 mb-20">
         
-        <div class="bg-gray-800 rounded-2xl shadow-2xl p-8 space-y-6 text-white transform transition-all duration-500">
-            <div class="text-center">
-                <h1 class="text-3xl font-bold tracking-tight">VardhanFlow Admin</h1>
-                <p class="text-gray-400 mt-2">Generate Print-Ready QR Menu Stickers</p>
+        <div class="bg-gray-900/40 backdrop-blur-xl rounded-[2rem] border border-[#d4a574]/20 p-8 md:p-10 space-y-6 shadow-2xl">
+            <div>
+                <h1 class="text-3xl font-black text-white tracking-tighter uppercase italic">QR <span class="text-[#d4a574]">Orchestrator</span></h1>
+                <p class="text-zinc-500 text-sm mt-1 font-medium">Configure high-performance digital flow points.</p>
             </div>
 
             <div class="space-y-4">
                 <div>
-                    <label class="text-sm text-gray-400 mb-1 block">Target Menu URL</label>
-                    <input type="url" id="url-input" placeholder="https://yashpndy.github.io/menu1" 
-                        class="w-full px-4 py-3 bg-gray-700 border-2 border-gray-600 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500 transition-all">
-                </div>
-                
-                <div>
-                    <label class="text-sm text-gray-400 mb-1 block">Sticker CTA Text</label>
-                    <input type="text" id="cta-input" placeholder="Hungry? Scan Me! 🍕" 
-                        class="w-full px-4 py-3 bg-gray-700 border-2 border-gray-600 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500 transition-all">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-[#d4a574] mb-2 block">Destination URL</label>
+                    <input type="url" id="url-input" placeholder="https://vardhanflow.com" 
+                        class="w-full px-5 py-3.5 bg-black border border-white/10 rounded-xl text-white outline-none input-focus transition-all font-medium text-sm">
                 </div>
 
-                <button id="generate-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105 duration-300">
-                    Generate Sticker
+                <div>
+                    <label class="text-[10px] font-black uppercase tracking-widest text-[#d4a574] mb-2 block">Custom Tagline (Header)</label>
+                    <input type="text" id="tagline-input" placeholder="Hungry? Scan for Menu" 
+                        class="w-full px-5 py-3.5 bg-black border border-white/10 rounded-xl text-white outline-none input-focus transition-all font-medium text-sm">
+                </div>
+                
+                <button id="generate-btn" class="w-full bg-[#d4a574] hover:bg-[#b88a5e] text-black font-black py-4 px-6 rounded-xl transition-all transform active:scale-95 uppercase tracking-widest text-xs shadow-lg shadow-[#d4a574]/10">
+                    Execute Generation
                 </button>
             </div>
 
-            <p id="error-message" class="text-red-400 text-center text-sm h-5"></p>
+            <p id="error-message" class="text-red-500 text-xs font-bold text-center h-4"></p>
         </div>
 
-        <div class="flex flex-col items-center justify-center space-y-6 w-full">
-            
-            <div id="capture-area">
-                <h2 id="preview-cta" class="text-black text-2xl font-bold text-center leading-tight">Hungry? Scan Me! 🍕</h2>
-                <div id="qrcode" class="bg-white border-4 border-gray-100 p-2 rounded-xl"></div>
-                <div class="text-center mt-2 w-full border-t-2 border-dashed border-gray-300 pt-3">
-                 <p class="text-blue-900 font-extrabold text-sm tracking-widest uppercase">⚡ Powered by VardhanFlow</p>
-                 <p class="text-gray-600 text-[11px] font-bold mt-1">Need a Website or Menu? 📞 8874377426</p>
+        <div class="flex flex-col items-center justify-center space-y-6">
+            <div id="capture-area" class="hidden relative p-8 bg-black border border-[#d4a574]/30 rounded-[2.5rem] copper-glow flex flex-col items-center gap-6 w-full max-w-[380px]">
+                
+                <h2 id="preview-tagline" class="text-white text-xl font-black uppercase tracking-tight text-center leading-tight"></h2>
+                
+                <div class="relative p-3 bg-gradient-to-br from-[#d4a574]/20 to-black rounded-3xl border border-[#d4a574]/20">
+                    <div id="qrcode" class="rounded-xl overflow-hidden bg-black"></div>
                 </div>
 
-            <button id="download-btn" class="w-full max-w-[320px] bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 hidden">
-                Download Print-Ready PNG
-            </button>
-        </div>
+                <div class="branded-footer pt-5 w-full text-center space-y-2">
+                    <p class="text-[#d4a574] font-black text-xs tracking-[0.2em] uppercase">Powered by VardhanFlow</p>
+                    <p class="text-zinc-500 text-[10px] font-bold uppercase leading-relaxed">
+                        Need a SaaS Product or Custom Software?<br/>
+                        <span class="text-white">Contact +91 8874377426</span>
+                    </p>
+                </div>
+            </div>
 
+            <div id="action-area" class="hidden w-full max-w-[380px] grid grid-cols-1 gap-3">
+                <button id="download-full-btn" class="bg-[#d4a574] hover:bg-[#b88a5e] text-black font-black py-4 rounded-xl transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-[10px]">
+                    Download Branded Sticker
+                </button>
+                <button id="download-clean-btn" class="bg-white/5 hover:bg-white/10 text-white border border-white/10 font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-[10px]">
+                    Download Clean QR Only
+                </button>
+            </div>
+        </div>
     </div>
 
+    <footer class="w-full max-w-4xl border-t border-[#d4a574]/20 pt-10 pb-12 mt-auto text-center space-y-6">
+        <div class="space-y-2">
+            <p class="text-[#d4a574] font-black text-sm tracking-[0.3em] uppercase">Powered by VardhanFlow</p>
+            <p class="text-zinc-500 text-xs font-bold uppercase tracking-widest">Need a SaaS product or custom software?</p>
+        </div>
+        
+        <a href="https://wa.me/918874377426" target="_blank" 
+           class="inline-flex items-center gap-3 bg-black border border-[#d4a574]/40 px-8 py-4 rounded-full text-[#d4a574] font-black text-[11px] tracking-[0.2em] uppercase transition-all hover:bg-[#d4a574] hover:text-black hover:shadow-[0_0_25px_rgba(212,165,116,0.3)] group">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:scale-110"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            Contact +91 8874377426
+        </a>
+    </footer>
+
     <script>
-        // DOM Elements
         const urlInput = document.getElementById('url-input');
-        const ctaInput = document.getElementById('cta-input');
+        const taglineInput = document.getElementById('tagline-input');
         const generateBtn = document.getElementById('generate-btn');
-        const captureArea = document.getElementById('capture-area');
-        const previewCta = document.getElementById('preview-cta');
         const qrCodeDiv = document.getElementById('qrcode');
-        const downloadBtn = document.getElementById('download-btn');
+        const captureArea = document.getElementById('capture-area');
+        const previewTagline = document.getElementById('preview-tagline');
+        const actionArea = document.getElementById('action-area');
+        const downloadFullBtn = document.getElementById('download-full-btn');
+        const downloadCleanBtn = document.getElementById('download-clean-btn');
         const errorMessage = document.getElementById('error-message');
 
-        let qrCodeInstance = null;
+        let qrCode = null;
 
-        // Validation Function
-        function isValidHttpUrl(string) {
-            let url;
-            try {
-                url = new URL(string);
-            } catch (_) {
-                return false;  
-            }
-            return url.protocol === "http:" || url.protocol === "https:";
-        }
-
-        // Generate Logic
         generateBtn.addEventListener('click', () => {
             const url = urlInput.value.trim();
-            const cta = ctaInput.value.trim() || "Hungry? Scan Me! 🍕";
-
-            errorMessage.textContent = '';
+            const tagline = taglineInput.value.trim() || "SCAN TO EXPLORE";
 
             if (!url) {
-                errorMessage.textContent = 'Please enter a URL.';
-                return;
-            }
-            if (!isValidHttpUrl(url)) {
-                errorMessage.textContent = 'Please enter a valid URL (e.g., https://example.com).';
+                errorMessage.textContent = 'SYSTEM ERROR: URL REQUIRED';
                 return;
             }
 
-            // Update CTA Text
-            previewCta.textContent = cta;
-            
-            // Clear old QR
             qrCodeDiv.innerHTML = '';
+            errorMessage.textContent = '';
+            previewTagline.textContent = tagline;
 
-            // Generate new QR (Solid white background for better printing contrast)
-            qrCodeInstance = new QRCodeStyling({
-                width: 220,
-                height: 220,
+            qrCode = new QRCodeStyling({
+                width: 260,
+                height: 260,
+                type: "svg",
                 data: url,
-                margin: 0,
-                dotsOptions: { color: "#1e3a8a", type: "rounded" },
-                backgroundOptions: { color: "#ffffff" },
-                cornersSquareOptions: { type: "extra-rounded", color: "#1e3a8a" }
+                margin: 10,
+                dotsOptions: {
+                    type: "dots",
+                    gradient: {
+                        type: "linear",
+                        rotation: 45,
+                        colorStops: [{ offset: 0, color: "#d4a574" }, { offset: 1, color: "#b88a5e" }]
+                    }
+                },
+                backgroundOptions: { color: "#000000" },
+                cornersSquareOptions: { type: "extra-rounded", color: "#d4a574", strokeWidth: 2 },
+                cornersDotOptions: { type: "dot", color: "#ffffff" }
             });
 
-            qrCodeInstance.append(qrCodeDiv);
-
-            // Show the sticker and download button
-            captureArea.classList.add('generated');
-            downloadBtn.classList.remove('hidden');
+            qrCode.append(qrCodeDiv);
+            captureArea.classList.remove('hidden');
+            actionArea.classList.remove('hidden');
         });
 
-        // Download Logic using html2canvas
-        downloadBtn.addEventListener('click', () => {
-            if (!qrCodeInstance) return;
-            
-            // html2canvas captures the div and turns it into an image
-            html2canvas(document.querySelector("#capture-area"), { scale: 3, backgroundColor: "#ffffff" }).then(canvas => {
+        downloadCleanBtn.addEventListener('click', () => {
+            if (qrCode) qrCode.download({ name: "VF-Clean-QR", extension: "png" });
+        });
+
+        downloadFullBtn.addEventListener('click', () => {
+            html2canvas(document.querySelector("#capture-area"), {
+                scale: 3,
+                backgroundColor: "#000000",
+                useCORS: true
+            }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = `VardhanFlow-Sticker-${Date.now()}.png`;
+                link.download = `VardhanFlow-Branded-Asset.png`;
                 link.href = canvas.toDataURL();
                 link.click();
             });
